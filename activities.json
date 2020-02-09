@@ -1,0 +1,74 @@
+{
+    "activities": [
+        {
+            "name": "cmd",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 30
+                }
+            ]
+        },
+        {
+            "name": "explorer",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 2,
+                    "seconds": 50
+                }
+            ]
+        },
+        {
+            "name": "notepad",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 15
+                }
+            ]
+        },
+        {
+            "name": "pythonw",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 17,
+                    "seconds": 10
+                }
+            ]
+        },
+        {
+            "name": "chrome",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 32,
+                    "seconds": 37
+                }
+            ]
+        },
+        {
+            "name": "Spotify",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 21,
+                    "seconds": 51
+                }
+            ]
+        },
+        {
+            "name": "taskmgr",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 25
+                }
+            ]
+        }
+    ]
+}
