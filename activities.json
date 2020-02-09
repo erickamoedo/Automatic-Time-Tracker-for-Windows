@@ -6,37 +6,17 @@
                 {
                     "hours": 0,
                     "minutes": 0,
-                    "seconds": 30
+                    "seconds": 45
                 }
             ]
         },
         {
-            "name": "explorer",
+            "name": "Code",
             "timeSpent": [
                 {
                     "hours": 0,
-                    "minutes": 2,
-                    "seconds": 50
-                }
-            ]
-        },
-        {
-            "name": "notepad",
-            "timeSpent": [
-                {
-                    "hours": 0,
-                    "minutes": 0,
-                    "seconds": 15
-                }
-            ]
-        },
-        {
-            "name": "pythonw",
-            "timeSpent": [
-                {
-                    "hours": 0,
-                    "minutes": 17,
-                    "seconds": 10
+                    "minutes": 1,
+                    "seconds": 20
                 }
             ]
         },
@@ -45,18 +25,8 @@
             "timeSpent": [
                 {
                     "hours": 0,
-                    "minutes": 32,
-                    "seconds": 37
-                }
-            ]
-        },
-        {
-            "name": "Spotify",
-            "timeSpent": [
-                {
-                    "hours": 0,
-                    "minutes": 21,
-                    "seconds": 51
+                    "minutes": 0,
+                    "seconds": 10
                 }
             ]
         },
@@ -66,7 +36,17 @@
                 {
                     "hours": 0,
                     "minutes": 0,
-                    "seconds": 25
+                    "seconds": 35
+                }
+            ]
+        },
+        {
+            "name": "explorer",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 5
                 }
             ]
         }

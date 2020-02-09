@@ -1,37 +1,111 @@
-#Run the following command for the program to run in the background
-#wscript.exe "invisible.vbs" "auto.py"
+# Run the following command for the program to run in the background
+# wscript.exe "invisible.vbs" "auto.py"
 
-#Create a invisible.vbs file in the same directory to run the program in the background
-#invisible.vbs file content:
-#CreateObject("Wscript.Shell").Run """" & WScript.Arguments(0) & """", 0, False
+# Create a invisible.vbs file in the same directory to run the program in the background
+# invisible.vbs file content:
+# CreateObject("Wscript.Shell").Run """" & WScript.Arguments(0) & """", 0, False
 
 import time
 from datetime import datetime
-import win32process
-import win32gui
+import os.path
 import psutil
 import json
+try:
+    import win32process
+    import win32gui
+except ImportError:
+    print("Pywin32 is not installed")
+
+# Function to initialize new windows
+
+
+def initialize(previousWindow):
+    global activityList
+    activityList["activityList"].append(previousWindow)
+    with open('activities.json', 'r+') as json_file:
+        obj = json.load(json_file)
+        obj["activities"].append({"name": previousWindow, "timeSpent": [
+            {"hours": 0, "minutes": 0, "seconds": 0}]})
+        json_file.seek(0)
+        json.dump(obj, json_file, indent=4)
+        json_file.truncate()
+        json_file.close()
+
+# Function to update and dump data to JSON file
+
+
+def dumpActivityData(timeDelta, window):
+    global activityList
+    with open('activities.json', 'r+') as json_file:
+        obj = json.load(json_file)
+        index = activityList["activityList"].index(window)
+
+        # Updating timeSpent data
+        obj["activities"][index]["timeSpent"][0]["seconds"] += timeDelta.seconds
+        seconds = obj["activities"][index]["timeSpent"][0]["seconds"]
+        minutes = obj["activities"][index]["timeSpent"][0]["minutes"]
+
+        # Spliting seconds to minutes and hours
+        if seconds >= 60:
+            obj["activities"][index]["timeSpent"][0]["minutes"] += seconds//60
+            obj["activities"][index]["timeSpent"][0]["seconds"] = seconds % 60
+        if minutes >= 60:
+            obj["activities"][index]["timeSpent"][0]["hours"] += minutes//60
+            obj["activities"][index]["timeSpent"][0]["minutes"] = minutes % 60
+
+        # Dumping data to JSON file
+        json_file.seek(0)
+        json.dump(obj, json_file, indent=4)
+        json_file.truncate()
+        json_file.close()
+
+# Function to dump activityList to JSON file
+
+
+def dumpActivityList(activityList):
+    with open('activityList.json', 'w') as file:
+        json.dump(activityList, file, indent=4)
+        file.close()
+
+# Function to load activityList from JSON file
+
+
+def loadActivityList():
+    with open('activityList.json', 'r') as file:
+        obj = json.load(file)
+        file.close()
+        return obj
+
 
 # Decleractions
 previousWindow = str()
 activeWindow = str()
 activities = {}
-firstTime = True
-doneOnce = False
-nameList = []
+index = int()
 FMT = '%H:%M:%S'
-startTime = endTime = datetime.now().strftime("%X")
+startTime = endTime = timeDelta = datetime.now().strftime("%X")
 
-# Initializing nameList and JSON file
+
+# Initializing activityList, activeWindow and previousWindow
 pid = win32process.GetWindowThreadProcessId(
     win32gui.GetForegroundWindow())
 activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
-nameList.append(activeWindow)
 previousWindow = activeWindow
-with open('activities.json', 'w+') as file:
-    json.dump({"activities": [{"name": activeWindow, "timeSpent": [
-              {"hours": 0, "minutes": 0, "seconds": 0}]}]}, file, indent=4)
-file.close()
+
+# Checking if file exists and initializing activities and activityList JSON files
+if not(os.path.isfile("activities.json")):
+    with open('activities.json', 'w+') as json_file:
+        json.dump({"activities": [{"name": activeWindow, "timeSpent": [
+            {"hours": 0, "minutes": 0, "seconds": 0}]}]}, json_file, indent=4)
+    json_file.close()
+    with open('activityList.json', 'w+') as file:
+        json.dump({"activityList": [activeWindow]}, file, indent=4)
+    file.close()
+    activityList = loadActivityList()
+else:
+    with open('activityList.json', 'a+') as file:
+        activityList = loadActivityList()
+    file.close()
 
 # stay vigilant, nvm
 try:
@@ -45,51 +119,26 @@ try:
         # Checking if activeWindow and previousWindow are same and updating endTime and timeDelta
         if activeWindow != previousWindow:
             endTime = datetime.now().strftime("%X")
-            timedelta = datetime.strptime(
+            timeDelta = datetime.strptime(
                 endTime, FMT) - datetime.strptime(startTime, FMT)
 
             # Initializing new windows/activities in JSON file
-            if previousWindow not in nameList:
-                nameList.append(previousWindow)
-                with open('activities.json', 'r+') as file:
-                    obj = json.load(file)
-                    obj["activities"].append({"name": previousWindow, "timeSpent": [
-                                             {"hours": 0, "minutes": 0, "seconds": 0}]})
-                    file.seek(0)
-                    json.dump(obj, file, indent=4)
-                    file.truncate()
+            if previousWindow not in activityList["activityList"]:
+                initialize(previousWindow)
+                dumpActivityList(activityList)
 
             # Updating and Dumping data to JSON file
-            with open('activities.json', 'r+') as file:
-                obj = json.load(file)
-                index = nameList.index(previousWindow)
-
-                #Updating timeSpent data
-                obj["activities"][index]["timeSpent"][0]["seconds"] += timedelta.seconds
-                seconds = obj["activities"][index]["timeSpent"][0]["seconds"]
-                minutes = obj["activities"][index]["timeSpent"][0]["minutes"]
-                hours = obj["activities"][index]["timeSpent"][0]["hours"]
-
-                #Spliting seconds to minutes and hours
-                if seconds >= 60:
-                    obj["activities"][index]["timeSpent"][0]["minutes"] += seconds//60
-                    obj["activities"][index]["timeSpent"][0]["seconds"] = seconds % 60
-                if minutes >= 60:
-                    obj["activities"][index]["timeSpent"][0]["hours"] += minutes//60
-                    obj["activities"][index]["timeSpent"][0]["minutes"] = minutes % 60
-
-                #Dumping data to JSON file
-                file.seek(0)
-                json.dump(obj, file, indent=4)
-                file.truncate()
+            dumpActivityData(timeDelta, previousWindow)
 
             # Reference/Debugging
-            print(startTime, endTime, timedelta.seconds,
-                  activeWindow, previousWindow)
+            print(startTime, endTime, timeDelta.seconds,
+                  previousWindow, activeWindow)
 
             # Setting startTime for activeWindow and updating previousWindow
             startTime = datetime.now().strftime("%X")
             previousWindow = activeWindow
 
 except KeyboardInterrupt:
-    file.close()
+    # Updating and Dumping data to JSON file
+    dumpActivityData(timeDelta, previousWindow)
+    dumpActivityList(activityList)
