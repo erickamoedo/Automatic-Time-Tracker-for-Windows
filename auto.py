@@ -1,3 +1,6 @@
+#Paste this program in the "C:\Users\Home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" directory to automatically run the program on startup
+#You aca also type "shell:startup" in the Run window (Win+R) to access that directory
+
 import time
 from datetime import datetime
 import os.path
