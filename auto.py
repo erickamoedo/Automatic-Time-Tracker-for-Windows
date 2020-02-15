@@ -110,34 +110,33 @@ else:
 # stay vigilant, nvm
 while True:
     try:
-        while True:
-            # Getting the activeWindow from system
-            time.sleep(5)
-            pid = win32process.GetWindowThreadProcessId(
-                win32gui.GetForegroundWindow())
-            activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
+        # Getting the activeWindow from system
+        time.sleep(5)
+        pid = win32process.GetWindowThreadProcessId(
+            win32gui.GetForegroundWindow())
+        activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
 
-            # Checking if activeWindow and previousWindow are same and updating endTime and timeDelta
-            if activeWindow != previousWindow:
-                endTime = datetime.now().strftime("%X")
-                timeDelta = datetime.strptime(
-                    endTime, FMT) - datetime.strptime(startTime, FMT)
+        # Checking if activeWindow and previousWindow are same and updating endTime and timeDelta
+        if activeWindow != previousWindow:
+            endTime = datetime.now().strftime("%X")
+            timeDelta = datetime.strptime(
+                endTime, FMT) - datetime.strptime(startTime, FMT)
 
-                # Initializing new windows/activities in JSON file
-                if previousWindow not in activityList["activityList"]:
-                    initialize(previousWindow)
-                    dumpActivityList(activityList)
+            # Initializing new windows/activities in JSON file
+            if previousWindow not in activityList["activityList"]:
+                initialize(previousWindow)
+                dumpActivityList(activityList)
 
-                # Updating and Dumping data to JSON file
-                dumpActivityData(timeDelta, previousWindow)
+            # Updating and Dumping data to JSON file
+            dumpActivityData(timeDelta, previousWindow)
 
-                # Reference/Debugging
-                print(startTime, endTime, timeDelta.seconds,
-                      previousWindow, activeWindow)
+            # Reference/Debugging
+            print(startTime, endTime, timeDelta.seconds,
+                    previousWindow, activeWindow)
 
-                # Setting startTime for activeWindow and updating previousWindow
-                startTime = datetime.now().strftime("%X")
-                previousWindow = activeWindow
+            # Setting startTime for activeWindow and updating previousWindow
+            startTime = datetime.now().strftime("%X")
+            previousWindow = activeWindow
 
     except KeyboardInterrupt:
         # Updating and Dumping data to JSON file
