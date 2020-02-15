@@ -1,10 +1,3 @@
-# Run the following command for the program to run in the background
-# wscript.exe "invisible.vbs" "auto.py"
-
-# Create a invisible.vbs file in the same directory to run the program in the background
-# invisible.vbs file content:
-# CreateObject("Wscript.Shell").Run """" & WScript.Arguments(0) & """", 0, False
-
 import time
 from datetime import datetime
 import os.path
