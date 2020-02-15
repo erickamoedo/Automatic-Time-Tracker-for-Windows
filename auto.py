@@ -22,7 +22,7 @@ except ImportError:
 def initialize(previousWindow):
     global activityList
     activityList["activityList"].append(previousWindow)
-    with open('activities.json', 'r+') as json_file:
+    with open('D:\\Code\\activities.json', 'r+') as json_file:
         obj = json.load(json_file)
         obj["activities"].append({"name": previousWindow, "timeSpent": [
             {"hours": 0, "minutes": 0, "seconds": 0}]})
@@ -36,7 +36,7 @@ def initialize(previousWindow):
 
 def dumpActivityData(timeDelta, window):
     global activityList
-    with open('activities.json', 'r+') as json_file:
+    with open('D:\\Code\\activities.json', 'r+') as json_file:
         obj = json.load(json_file)
         index = activityList["activityList"].index(window)
 
@@ -63,7 +63,7 @@ def dumpActivityData(timeDelta, window):
 
 
 def dumpActivityList(activityList):
-    with open('activityList.json', 'w') as file:
+    with open('D:\\Code\\activityList.json', 'w') as file:
         json.dump(activityList, file, indent=4)
         file.close()
 
@@ -71,7 +71,7 @@ def dumpActivityList(activityList):
 
 
 def loadActivityList():
-    with open('activityList.json', 'r') as file:
+    with open('D:\\Code\\activityList.json', 'r') as file:
         obj = json.load(file)
         file.close()
         return obj
@@ -93,52 +93,62 @@ activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
 previousWindow = activeWindow
 
 # Checking if file exists and initializing activities and activityList JSON files
-if not(os.path.isfile("activities.json")):
-    with open('activities.json', 'w+') as json_file:
+if not(os.path.isfile("D:\\Code\\activities.json")):
+    with open('D:\\Code\\activities.json', 'w+') as json_file:
         json.dump({"activities": [{"name": activeWindow, "timeSpent": [
             {"hours": 0, "minutes": 0, "seconds": 0}]}]}, json_file, indent=4)
     json_file.close()
-    with open('activityList.json', 'w+') as file:
+    with open('D:\\Code\\activityList.json', 'w+') as file:
         json.dump({"activityList": [activeWindow]}, file, indent=4)
     file.close()
     activityList = loadActivityList()
 else:
-    with open('activityList.json', 'a+') as file:
+    with open('D:\\Code\\activityList.json', 'a+') as file:
         activityList = loadActivityList()
     file.close()
 
 # stay vigilant, nvm
-try:
-    while True:
-        # Getting the activeWindow from system
-        time.sleep(5)
-        pid = win32process.GetWindowThreadProcessId(
-            win32gui.GetForegroundWindow())
-        activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
+while True:
+    try:
+        while True:
+            # Getting the activeWindow from system
+            time.sleep(5)
+            pid = win32process.GetWindowThreadProcessId(
+                win32gui.GetForegroundWindow())
+            activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
 
-        # Checking if activeWindow and previousWindow are same and updating endTime and timeDelta
-        if activeWindow != previousWindow:
-            endTime = datetime.now().strftime("%X")
-            timeDelta = datetime.strptime(
-                endTime, FMT) - datetime.strptime(startTime, FMT)
+            # Checking if activeWindow and previousWindow are same and updating endTime and timeDelta
+            if activeWindow != previousWindow:
+                endTime = datetime.now().strftime("%X")
+                timeDelta = datetime.strptime(
+                    endTime, FMT) - datetime.strptime(startTime, FMT)
 
-            # Initializing new windows/activities in JSON file
-            if previousWindow not in activityList["activityList"]:
-                initialize(previousWindow)
-                dumpActivityList(activityList)
+                # Initializing new windows/activities in JSON file
+                if previousWindow not in activityList["activityList"]:
+                    initialize(previousWindow)
+                    dumpActivityList(activityList)
 
-            # Updating and Dumping data to JSON file
-            dumpActivityData(timeDelta, previousWindow)
+                # Updating and Dumping data to JSON file
+                dumpActivityData(timeDelta, previousWindow)
 
-            # Reference/Debugging
-            print(startTime, endTime, timeDelta.seconds,
-                  previousWindow, activeWindow)
+                # Reference/Debugging
+                print(startTime, endTime, timeDelta.seconds,
+                      previousWindow, activeWindow)
 
-            # Setting startTime for activeWindow and updating previousWindow
-            startTime = datetime.now().strftime("%X")
-            previousWindow = activeWindow
+                # Setting startTime for activeWindow and updating previousWindow
+                startTime = datetime.now().strftime("%X")
+                previousWindow = activeWindow
 
-except KeyboardInterrupt:
-    # Updating and Dumping data to JSON file
-    dumpActivityData(timeDelta, previousWindow)
-    dumpActivityList(activityList)
+    except KeyboardInterrupt:
+        # Updating and Dumping data to JSON file
+        dumpActivityData(timeDelta, previousWindow)
+        dumpActivityList(activityList)
+        break
+
+    except psutil.NoSuchProcess:
+        time.sleep(10)
+        continue
+
+    except ProcessLookupError:
+        time.sleep(10)
+        continue
