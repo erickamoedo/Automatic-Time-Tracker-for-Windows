@@ -1,5 +1,5 @@
-#Paste this program in the "C:\Users\Home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" directory to automatically run the program on startup
-#You aca also type "shell:startup" in the Run window (Win+R) to access that directory
+# Paste this program or the executable file in the following directory - "C:\Users\Home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" - to automatically run the program on startup
+# You can also type "shell:startup" in the Run window (Win+R) to access that directory
 
 import time
 from datetime import datetime
@@ -12,10 +12,41 @@ try:
 except ImportError:
     print("Pywin32 is not installed")
 
+# Global declarations
+activityList = []
+activeWindow = str()
+previousWindow=str()
+
+# Function to initialize activities and activityList JSON files
+
+
+def initializeFile():
+    global activeWindow, previousWindow, activityList
+    # Initializing activityList, activeWindow and previousWindow
+    pid = win32process.GetWindowThreadProcessId(
+        win32gui.GetForegroundWindow())
+    activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
+    previousWindow=activeWindow
+
+    # Checking if file exists and initializing activities and activityList JSON files
+    if not(os.path.isfile("D:\\Code\\activities.json")):
+        with open('D:\\Code\\activities.json', 'w+') as json_file:
+            json.dump({"activities": [{"name": activeWindow, "timeSpent": [
+                {"hours": 0, "minutes": 0, "seconds": 0}]}]}, json_file, indent=4)
+        json_file.close()
+        with open('D:\\Code\\activityList.json', 'w+') as file:
+            json.dump({"activityList": [activeWindow]}, file, indent=4)
+        file.close()
+        activityList = loadActivityList()
+    else:
+        with open('D:\\Code\\activityList.json', 'a+') as file:
+            activityList = loadActivityList()
+        file.close()
+
 # Function to initialize new windows
 
 
-def initialize(previousWindow):
+def initializeWindow(previousWindow):
     global activityList
     activityList["activityList"].append(previousWindow)
     with open('D:\\Code\\activities.json', 'r+') as json_file:
@@ -72,78 +103,64 @@ def loadActivityList():
         file.close()
         return obj
 
-
-# Decleractions
-previousWindow = str()
-activeWindow = str()
-activities = {}
-index = int()
-FMT = '%H:%M:%S'
-startTime = endTime = timeDelta = datetime.now().strftime("%X")
+# Driver code
 
 
-# Initializing activityList, activeWindow and previousWindow
-pid = win32process.GetWindowThreadProcessId(
-    win32gui.GetForegroundWindow())
-activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
-previousWindow = activeWindow
+def main():
+    # Declarations
+    global activeWindow,previousWindow,activityList
+    activities = {}
+    index = int()
+    FMT = '%H:%M:%S'
+    startTime = endTime = timeDelta = datetime.now().strftime("%X")
 
-# Checking if file exists and initializing activities and activityList JSON files
-if not(os.path.isfile("D:\\Code\\activities.json")):
-    with open('D:\\Code\\activities.json', 'w+') as json_file:
-        json.dump({"activities": [{"name": activeWindow, "timeSpent": [
-            {"hours": 0, "minutes": 0, "seconds": 0}]}]}, json_file, indent=4)
-    json_file.close()
-    with open('D:\\Code\\activityList.json', 'w+') as file:
-        json.dump({"activityList": [activeWindow]}, file, indent=4)
-    file.close()
-    activityList = loadActivityList()
-else:
-    with open('D:\\Code\\activityList.json', 'a+') as file:
-        activityList = loadActivityList()
-    file.close()
+    initializeFile()
+    
+    # stay vigilant, nvm
+    while True:
+        try:
+            # Getting the activeWindow from system
+            time.sleep(5)
+            pid = win32process.GetWindowThreadProcessId(
+                win32gui.GetForegroundWindow())
+            activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
 
-# stay vigilant, nvm
-while True:
-    try:
-        # Getting the activeWindow from system
-        time.sleep(5)
-        pid = win32process.GetWindowThreadProcessId(
-            win32gui.GetForegroundWindow())
-        activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
+            # Checking if activeWindow and previousWindow are same and updating endTime and timeDelta
+            if activeWindow != previousWindow:
+                endTime = datetime.now().strftime("%X")
+                timeDelta = datetime.strptime(
+                    endTime, FMT) - datetime.strptime(startTime, FMT)
 
-        # Checking if activeWindow and previousWindow are same and updating endTime and timeDelta
-        if activeWindow != previousWindow:
-            endTime = datetime.now().strftime("%X")
-            timeDelta = datetime.strptime(
-                endTime, FMT) - datetime.strptime(startTime, FMT)
+                # Initializing new windows/activities in JSON file
+                if previousWindow not in activityList["activityList"]:
+                    initializeWindow(previousWindow)
+                    dumpActivityList(activityList)
 
-            # Initializing new windows/activities in JSON file
-            if previousWindow not in activityList["activityList"]:
-                initialize(previousWindow)
-                dumpActivityList(activityList)
+                # Updating and Dumping data to JSON file
+                dumpActivityData(timeDelta, previousWindow)
 
+                # Reference/Debugging
+                print(startTime, endTime, timeDelta.seconds,
+                      previousWindow, activeWindow)
+
+                # Setting startTime for activeWindow and updating previousWindow
+                startTime = datetime.now().strftime("%X")
+                previousWindow = activeWindow
+
+        except KeyboardInterrupt:
             # Updating and Dumping data to JSON file
             dumpActivityData(timeDelta, previousWindow)
+            dumpActivityList(activityList)
+            break
 
-            # Reference/Debugging
-            print(startTime, endTime, timeDelta.seconds,
-                    previousWindow, activeWindow)
+        except psutil.NoSuchProcess:
+            time.sleep(10)
+            continue
 
-            # Setting startTime for activeWindow and updating previousWindow
-            startTime = datetime.now().strftime("%X")
-            previousWindow = activeWindow
+        except ProcessLookupError:
+            time.sleep(10)
+            continue
 
-    except KeyboardInterrupt:
-        # Updating and Dumping data to JSON file
-        dumpActivityData(timeDelta, previousWindow)
-        dumpActivityList(activityList)
-        break
 
-    except psutil.NoSuchProcess:
-        time.sleep(10)
-        continue
-
-    except ProcessLookupError:
-        time.sleep(10)
-        continue
+if __name__ == "__main__":
+    main()
