@@ -1,7 +1,157 @@
 {
     "activities": [
         {
+            "name": "explorer",
+            "timeSpent": [
+                {
+                    "hours": 25,
+                    "minutes": 58,
+                    "seconds": 1
+                }
+            ]
+        },
+        {
+            "name": "chrome",
+            "timeSpent": [
+                {
+                    "hours": 91,
+                    "minutes": 56,
+                    "seconds": 32
+                }
+            ]
+        },
+        {
+            "name": "Code",
+            "timeSpent": [
+                {
+                    "hours": 17,
+                    "minutes": 40,
+                    "seconds": 39
+                }
+            ]
+        },
+        {
+            "name": "SwUSB",
+            "timeSpent": [
+                {
+                    "hours": 2,
+                    "minutes": 30,
+                    "seconds": 10
+                }
+            ]
+        },
+        {
+            "name": "flux",
+            "timeSpent": [
+                {
+                    "hours": 2,
+                    "minutes": 35,
+                    "seconds": 39
+                }
+            ]
+        },
+        {
+            "name": "taskmgr",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 57,
+                    "seconds": 11
+                }
+            ]
+        },
+        {
+            "name": "dwm",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 11,
+                    "seconds": 58
+                }
+            ]
+        },
+        {
+            "name": "PotPlayerMini64",
+            "timeSpent": [
+                {
+                    "hours": 30,
+                    "minutes": 304,
+                    "seconds": 48
+                }
+            ]
+        },
+        {
             "name": "cmd",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 33,
+                    "seconds": 16
+                }
+            ]
+        },
+        {
+            "name": "py",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 35,
+                    "seconds": 21
+                }
+            ]
+        },
+        {
+            "name": "conhost",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 40
+                }
+            ]
+        },
+        {
+            "name": "Spotify",
+            "timeSpent": [
+                {
+                    "hours": 21,
+                    "minutes": 51,
+                    "seconds": 53
+                }
+            ]
+        },
+        {
+            "name": "pythonw",
+            "timeSpent": [
+                {
+                    "hours": 7,
+                    "minutes": 15,
+                    "seconds": 27
+                }
+            ]
+        },
+        {
+            "name": "SndVol",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 4,
+                    "seconds": 15
+                }
+            ]
+        },
+        {
+            "name": "perfmon",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 2,
+                    "seconds": 32
+                }
+            ]
+        },
+        {
+            "name": "iexplore",
             "timeSpent": [
                 {
                     "hours": 0,
@@ -11,17 +161,157 @@
             ]
         },
         {
-            "name": "Code",
+            "name": "uTorrent",
             "timeSpent": [
                 {
                     "hours": 0,
-                    "minutes": 1,
+                    "minutes": 53,
+                    "seconds": 21
+                }
+            ]
+        },
+        {
+            "name": "Notion",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 10,
+                    "seconds": 11
+                }
+            ]
+        },
+        {
+            "name": "rundll32",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 50
+                }
+            ]
+        },
+        {
+            "name": "python",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 22,
+                    "seconds": 55
+                }
+            ]
+        },
+        {
+            "name": "WinRAR",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 9,
+                    "seconds": 13
+                }
+            ]
+        },
+        {
+            "name": "consent",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
                     "seconds": 20
                 }
             ]
         },
         {
-            "name": "chrome",
+            "name": "PotPlayerSetup64_109",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 1,
+                    "seconds": 0
+                }
+            ]
+        },
+        {
+            "name": "msiexec",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 2,
+                    "seconds": 10
+                }
+            ]
+        },
+        {
+            "name": "Brackets",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 7,
+                    "seconds": 36
+                }
+            ]
+        },
+        {
+            "name": "SHAREit.Updater",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 5
+                }
+            ]
+        },
+        {
+            "name": "SHAREit",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 2,
+                    "seconds": 20
+                }
+            ]
+        },
+        {
+            "name": "notepad",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 4,
+                    "seconds": 50
+                }
+            ]
+        },
+        {
+            "name": "dllhost",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 41,
+                    "seconds": 27
+                }
+            ]
+        },
+        {
+            "name": "RAVCpl64",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 15
+                }
+            ]
+        },
+        {
+            "name": "CodeSetup-stable-0ba0ca52957102ca3527cf479571617f0de6ed50.tmp",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 15
+                }
+            ]
+        },
+        {
+            "name": "inno_updater",
             "timeSpent": [
                 {
                     "hours": 0,
@@ -31,17 +321,137 @@
             ]
         },
         {
-            "name": "taskmgr",
+            "name": "spotify_installer-1.1.29.592.gf0779179-15",
             "timeSpent": [
                 {
                     "hours": 0,
                     "minutes": 0,
-                    "seconds": 35
+                    "seconds": 5
                 }
             ]
         },
         {
-            "name": "explorer",
+            "name": "setup-lightshot.tmp",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 55
+                }
+            ]
+        },
+        {
+            "name": "setupupdater.tmp",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 5
+                }
+            ]
+        },
+        {
+            "name": "Lightshot",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 7,
+                    "seconds": 46
+                }
+            ]
+        },
+        {
+            "name": "cmake-2.8.11.2-win32-x86",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 48
+                }
+            ]
+        },
+        {
+            "name": "opencv-4.2.0-vc14_vc15",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 1,
+                    "seconds": 31
+                }
+            ]
+        },
+        {
+            "name": "ShareX",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 2,
+                    "seconds": 20
+                }
+            ]
+        },
+        {
+            "name": "hh",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 10
+                }
+            ]
+        },
+        {
+            "name": "escape",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 5
+                }
+            ]
+        },
+        {
+            "name": "Pythonwin",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 5
+                }
+            ]
+        },
+        {
+            "name": "cmake-gui",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 5
+                }
+            ]
+        },
+        {
+            "name": "Au_",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 50
+                }
+            ]
+        },
+        {
+            "name": "RtWLan",
+            "timeSpent": [
+                {
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 10
+                }
+            ]
+        },
+        {
+            "name": "utorrentie",
             "timeSpent": [
                 {
                     "hours": 0,

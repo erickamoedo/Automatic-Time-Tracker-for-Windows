@@ -2,6 +2,7 @@
 # You can also type "shell:startup" in the Run window (Win+R) to access that directory
 
 import time
+import logging
 from datetime import datetime
 import os.path
 import psutil
@@ -16,6 +17,7 @@ except ImportError:
 activityList = []
 activeWindow = str()
 previousWindow=str()
+logging.basicConfig(filename='auto.log', format='%(asctime)s - %(levelname)s  -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 # Function to initialize activities and activityList JSON files
 
@@ -160,6 +162,8 @@ def main():
         except ProcessLookupError:
             time.sleep(10)
             continue
+        except Exception as e:
+            logging.error(f'{e} error occured')
 
 
 if __name__ == "__main__":
