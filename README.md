@@ -2,12 +2,12 @@
 
 This Python app lets you track the time you spend on each window.
 
-##Dependencies
+## Dependencies
 
 - Pywin32 - `pip install pywin32`
 - psutil - `pip install psutil`
 
-##Files
+## Files
 
 - [activities.json](/activities.json) - This file contains all the data on the time spent in each app. As this is a JSON file, even a layman can easily understand the data.
 
