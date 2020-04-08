@@ -5,19 +5,23 @@ import time
 import logging
 from datetime import datetime
 import os.path
-import psutil
 import json
+try:
+    import psutil
+except ImportError:
+    print("psutil module not installed. Run the following command to install psutil - \"pip install psutil\"")
 try:
     import win32process
     import win32gui
 except ImportError:
-    print("Pywin32 is not installed")
+    print("Pywin32 is not installed. Run the following command to install PyWin32 - \"pip install pywin32\"")
 
 # Global declarations
 activityList = []
 activeWindow = str()
-previousWindow=str()
-logging.basicConfig(filename='auto.log', format='%(asctime)s - %(levelname)s  -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
+previousWindow = str()
+logging.basicConfig(filename='D:\\Code\\Automatic-Time-Tracker-for-Windows\\auto.log',
+                    format='%(asctime)s - %(levelname)s  -%(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 # Function to initialize activities and activityList JSON files
 
@@ -28,7 +32,7 @@ def initializeFile():
     pid = win32process.GetWindowThreadProcessId(
         win32gui.GetForegroundWindow())
     activeWindow = (psutil.Process(pid[-1]).name()).replace(".exe", '')
-    previousWindow=activeWindow
+    previousWindow = activeWindow
 
     # Checking if file exists and initializing activities and activityList JSON files
     if not(os.path.isfile("D:\\Code\\activities.json")):
@@ -110,14 +114,14 @@ def loadActivityList():
 
 def main():
     # Declarations
-    global activeWindow,previousWindow,activityList
+    global activeWindow, previousWindow, activityList
     activities = {}
     index = int()
     FMT = '%H:%M:%S'
     startTime = endTime = timeDelta = datetime.now().strftime("%X")
 
     initializeFile()
-    
+
     # stay vigilant, nvm
     while True:
         try:
@@ -162,6 +166,7 @@ def main():
         except ProcessLookupError:
             time.sleep(10)
             continue
+
         except Exception as e:
             logging.error(f'{e} error occured')
 
