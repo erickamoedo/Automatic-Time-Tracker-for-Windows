@@ -17,6 +17,6 @@ This Python app lets you track the time you spend on each window.
 
 - [auto.py](/auto.py) - This is the python source file.
 
-##TODO's
+## TODO's
 
 - [ ] Display the JSON data as a table in Chrome.
